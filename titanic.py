@@ -375,7 +375,7 @@ def constructBuildName(runArgs):
         ' ' + 'build'
 
 
-def runTitanicAnalysis(runArgs, allPushes):
+def runTitanicAnalysis(runArgs, allPushes,revLimit = 10):
     if runArgs['revision'] not in allPushes:
         print 'Revision not found in the current range.'
         print 'Consider increasing range!'
@@ -384,7 +384,7 @@ def runTitanicAnalysis(runArgs, allPushes):
 
     unBuiltRevList = []
     revPos = allPushes.index(runArgs['revision'])
-    for push in allPushes[revPos+1:]:
+    for push in allPushes[revPos+1:revPos+revLimit+1]:
         pushResults = getCSetResults(
             runArgs['branch'], runArgs['platform'],
             runArgs['tests'], runArgs['buildType'], push)
