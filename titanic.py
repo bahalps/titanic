@@ -317,9 +317,9 @@ def findBuildStatus(push, runArgs, statusType):
                 runArgs['branch'] == 'mozilla-beta':
             results = getCSetResultsBuild(
                 runArgs['branch'], platforms, ['build'], [''], push)
-
-        results = getCSetResultsBuild(
-            runArgs['branch'], platforms, ['opt'], ['pgo-build'], push)
+        else:
+            results = getCSetResultsBuild(
+                runArgs['branch'], platforms, ['opt'], ['pgo-build'], push)
     elif 'asan' in runArgs['buildername'].lower() and \
             platformXRef[runArgs['platform'][0]] == 'linux64':
         results = getCSetResultsBuild(
@@ -334,9 +334,15 @@ def findBuildStatus(push, runArgs, statusType):
         results = getCSetResultsBuild(
             runArgs['branch'], platforms, ['build'], [''], push)
 
-    if (results == []) or (results[0][0] != statusType):
+    if (results == []):
         return [False, None]
-    return [True, results[0]]
+
+    for result in results:
+        print result
+        if result[0] == statusType:
+            return [True,result]
+
+    return [False, None]
 
 
 def constructBuildName(runArgs):
