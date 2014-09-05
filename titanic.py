@@ -449,7 +449,6 @@ def runTitanicAnalysis(runArgs, allPushes,revLimit = 10):
 
     unBuiltRevList = []
     revPos = allPushes.index(runArgs['revision'])
-
     pushesToAnalyze = allPushes[revPos+1:revPos+revLimit+1]
     # Spawn the number of threads input as argument into titanic.  getRange will
     # divide up the revisions for each thread to handle.  For those revisions,
